@@ -1,0 +1,50 @@
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class WebDriverTesting{
+    public static org.openqa.selenium.WebDriver driver;
+
+    @BeforeAll
+    public void initWebDriver() {
+        System.setProperty("webdriver.chrome.driver", "C:/Users/Vivobook/Downloads/chromedriver_win32/chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    @Test
+    @DisplayName("Get WebElement")
+    public void WebDriverGetElement() {
+        driver.get("https://www.wellsfargo.com/");
+        WebElement searchBox = driver.findElement(By.name("Cards"));
+        searchBox.sendKeys("Web Element" + Keys.ENTER);
+    }
+
+    @Test
+    @DisplayName("Find WebElement")
+    public void WebDriverFindElement(){
+        driver.get("https://www.wellsfargo.com/");
+        WebElement username = driver.findElement(By.cssSelector("#username"));
+        username.sendKeys("username");
+        WebElement password = driver.findElement(By.xpath("//input[@id='password']"));
+        password.sendKeys("password");
+        WebElement searchBox = driver.findElement(By.name("Search"));
+        System.out.println(searchBox.getSize());
+        WebElement loginButton = driver.findElement(By.className("c7"));
+        loginButton.click();
+        WebElement errorMessage = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div[2]/div[1]/div/div/div/div[1]/div"));
+        System.out.println(errorMessage.getText());
+    }
+
+    @AfterAll
+    public void tearDown(){
+        driver.quit();
+    }
+
+
+
+}
+
